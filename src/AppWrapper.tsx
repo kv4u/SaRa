@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { HashRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/layout/Navbar'
 
 const Dashboard = React.lazy(() => import('./pages/Dashboard'))
@@ -47,7 +47,7 @@ const LoadingScreen = () => (
 
 export default function AppWrapper() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="min-h-screen text-white max-w-lg mx-auto relative">
         <ErrorBoundary>
           <Suspense fallback={<LoadingScreen />}>
@@ -62,6 +62,6 @@ export default function AppWrapper() {
         </ErrorBoundary>
         <Navbar />
       </div>
-    </BrowserRouter>
+    </HashRouter>
   )
 }

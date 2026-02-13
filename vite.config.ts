@@ -18,8 +18,8 @@ export default defineConfig({
         background_color: '#0b1121',
         display: 'standalone',
         orientation: 'portrait',
-        scope: '/',
-        start_url: '/',
+        scope: '/SaRa/',
+        start_url: '/SaRa/',
         icons: [
           {
             src: 'pwa-192x192.png',
@@ -41,5 +41,5 @@ export default defineConfig({
       },
     }),
   ],
-  base: './',
+  base: '/SaRa/',
 })
