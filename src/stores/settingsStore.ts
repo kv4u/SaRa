@@ -74,11 +74,6 @@ interface SettingsState {
   // Dopamine menu
   dopamineItems: DopamineItem[]
 
-  // AI settings
-  aiApiKey: string
-  aiProvider: 'gemini' | 'openai-compatible'
-  aiBaseUrl: string
-
   // Actions
   addPoints: (pts: number) => void
   recordFocusMinutes: (mins: number) => void
@@ -87,9 +82,6 @@ interface SettingsState {
   removeDopamineItem: (id: string) => void
   setFocusDuration: (mins: number) => void
   setBreakDuration: (mins: number) => void
-  setAiApiKey: (key: string) => void
-  setAiProvider: (provider: 'gemini' | 'openai-compatible') => void
-  setAiBaseUrl: (url: string) => void
 }
 
 function todayStr() {
@@ -107,9 +99,6 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   totalFocusMinutesToday: storage.get('totalFocusMinutesToday', 0),
   lastFocusDate: storage.get('lastFocusDate', ''),
   dopamineItems: storage.get<DopamineItem[]>('dopamineItems', defaultDopamineItems),
-  aiApiKey: storage.get('aiApiKey', ''),
-  aiProvider: storage.get<'gemini' | 'openai-compatible'>('aiProvider', 'gemini'),
-  aiBaseUrl: storage.get('aiBaseUrl', 'https://generativelanguage.googleapis.com'),
 
   addPoints: (pts) => {
     const newTotal = get().totalPoints + pts
@@ -199,20 +188,5 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   setBreakDuration: (mins) => {
     storage.set('breakDuration', mins)
     set({ breakDuration: mins })
-  },
-
-  setAiApiKey: (key) => {
-    storage.set('aiApiKey', key)
-    set({ aiApiKey: key })
-  },
-
-  setAiProvider: (provider) => {
-    storage.set('aiProvider', provider)
-    set({ aiProvider: provider })
-  },
-
-  setAiBaseUrl: (url) => {
-    storage.set('aiBaseUrl', url)
-    set({ aiBaseUrl: url })
   },
 }))

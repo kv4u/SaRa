@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import PageWrapper from '../components/layout/PageWrapper'
-import { useSettingsStore } from '../stores/settingsStore'
 import { useTaskStore } from '../stores/taskStore'
 import { useT } from '../utils/i18n'
 import { sendMessage, type ChatMessage, type AiTaskSuggestion } from '../utils/ai'
@@ -15,18 +14,14 @@ interface StoredMessage {
 }
 
 export default function SmartPlanner() {
-  const apiKey = useSettingsStore((s) => s.aiApiKey)
-  const setAiApiKey = useSettingsStore((s) => s.setAiApiKey)
   const addTask = useTaskStore((s) => s.addTask)
   const t = useT()
 
-  const [keyInput, setKeyInput] = useState('')
   const [messages, setMessages] = useState<StoredMessage[]>(() =>
     storage.get<StoredMessage[]>('aiChatMessages', [])
   )
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [showSetup, setShowSetup] = useState(!apiKey)
   const scrollRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = useCallback(() => {
@@ -42,14 +37,6 @@ export default function SmartPlanner() {
   useEffect(() => {
     storage.set('aiChatMessages', messages)
   }, [messages])
-
-  const handleSaveKey = () => {
-    const key = keyInput.trim()
-    if (!key) return
-    setAiApiKey(key)
-    setKeyInput('')
-    setShowSetup(false)
-  }
 
   const handleSend = async () => {
     const text = input.trim()
@@ -67,7 +54,7 @@ export default function SmartPlanner() {
         text: m.text,
       }))
 
-      const response = await sendMessage(chatHistory, apiKey)
+      const response = await sendMessage(chatHistory)
       const aiMsg: StoredMessage = {
         role: 'model',
         text: response.text,
@@ -101,58 +88,6 @@ export default function SmartPlanner() {
     storage.set('aiChatMessages', [])
   }
 
-  const handleChangeKey = () => {
-    setAiApiKey('')
-    setKeyInput('')
-    setShowSetup(true)
-  }
-
-  if (showSetup) {
-    return (
-      <PageWrapper title={t('smart.title')}>
-        <div className="flex flex-col items-center justify-center min-h-[50vh] px-2">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="glass-card p-6 text-center max-w-sm w-full space-y-4"
-          >
-            <div className="w-14 h-14 rounded-2xl gradient-primary flex items-center justify-center mx-auto">
-              <span className="text-2xl">🧠</span>
-            </div>
-            <h2 className="text-lg font-bold text-white">{t('smart.setup_title')}</h2>
-            <p className="text-[13px] text-gray-400 leading-relaxed">
-              {t('smart.setup_desc')}
-            </p>
-            <a
-              href="https://aistudio.google.com/apikey"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 gradient-primary text-white text-[13px] font-semibold px-5 py-2.5 rounded-xl shadow-glow-purple"
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>
-              {t('smart.get_key')}
-            </a>
-            <input
-              type="password"
-              value={keyInput}
-              onChange={(e) => setKeyInput(e.target.value)}
-              placeholder={t('smart.api_key_placeholder')}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-[13px] placeholder-gray-500 outline-none focus:border-primary-500/50 transition-all"
-              onKeyDown={(e) => e.key === 'Enter' && handleSaveKey()}
-            />
-            <button
-              onClick={handleSaveKey}
-              disabled={!keyInput.trim()}
-              className="w-full py-3 rounded-xl gradient-primary text-white font-semibold text-[13px] disabled:opacity-30 cursor-pointer shadow-glow-purple transition"
-            >
-              {t('smart.save_key')}
-            </button>
-          </motion.div>
-        </div>
-      </PageWrapper>
-    )
-  }
-
   return (
     <PageWrapper title={t('smart.title')}>
       <div className="flex flex-col" style={{ height: 'calc(100dvh - 190px)' }}>
@@ -163,12 +98,6 @@ export default function SmartPlanner() {
             className="text-[11px] text-gray-500 hover:text-gray-300 bg-white/5 px-3 py-1.5 rounded-lg transition cursor-pointer"
           >
             {t('smart.clear')}
-          </button>
-          <button
-            onClick={handleChangeKey}
-            className="text-[11px] text-gray-500 hover:text-gray-300 bg-white/5 px-3 py-1.5 rounded-lg transition cursor-pointer"
-          >
-            {t('smart.change_key')}
           </button>
         </div>
 
