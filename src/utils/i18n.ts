@@ -115,6 +115,34 @@ const translations = {
   'settings.language': { en: 'Language', fr: 'Langue' },
   'settings.title': { en: 'Settings', fr: 'Réglages' },
 
+  // Custom duration
+  'tasks.custom': { en: 'Custom', fr: 'Perso' },
+  'tasks.custom_placeholder': { en: 'Min', fr: 'Min' },
+
+  // Floating timer bar
+  'timerbar.pause': { en: 'Pause', fr: 'Pause' },
+  'timerbar.resume': { en: 'Resume', fr: 'Reprendre' },
+  'timerbar.stop': { en: 'Stop', fr: 'Stop' },
+  'timerbar.complete': { en: 'Task complete!', fr: 'Tâche terminée !' },
+
+  // Smart Planner / AI
+  'nav.smart': { en: 'Planner', fr: 'Planif.' },
+  'smart.title': { en: 'Smart Planner', fr: 'Planificateur' },
+  'smart.setup_title': { en: 'Set Up AI Assistant', fr: 'Configurer l\'assistant IA' },
+  'smart.setup_desc': { en: 'Get a free API key from Google AI Studio to enable the AI planner. Your key stays on your device only.', fr: 'Obtiens une clé API gratuite de Google AI Studio pour activer le planificateur IA. Ta clé reste uniquement sur ton appareil.' },
+  'smart.get_key': { en: 'Get Free API Key', fr: 'Obtenir une clé gratuite' },
+  'smart.api_key_placeholder': { en: 'Paste your Gemini API key here...', fr: 'Colle ta clé API Gemini ici...' },
+  'smart.save_key': { en: 'Save & Start', fr: 'Enregistrer' },
+  'smart.input_placeholder': { en: 'Tell me about your tasks...', fr: 'Dis-moi quelles sont tes tâches...' },
+  'smart.send': { en: 'Send', fr: 'Envoyer' },
+  'smart.thinking': { en: 'Thinking...', fr: 'Réflexion...' },
+  'smart.add_task': { en: 'Add to Tasks', fr: 'Ajouter aux tâches' },
+  'smart.added': { en: 'Added!', fr: 'Ajouté !' },
+  'smart.error': { en: 'Something went wrong. Please try again.', fr: 'Une erreur est survenue. Réessaie.' },
+  'smart.clear': { en: 'Clear Chat', fr: 'Effacer le chat' },
+  'smart.change_key': { en: 'Change API Key', fr: 'Changer la clé API' },
+  'smart.welcome': { en: 'Hi! Tell me what you need to do today, this week, or this month. I\'ll help you break it down into manageable tasks.', fr: 'Salut ! Dis-moi ce que tu dois faire aujourd\'hui, cette semaine ou ce mois-ci. Je t\'aiderai à découper tes tâches.' },
+
   // Day labels for calendar
   'days.M': { en: 'M', fr: 'L' },
   'days.T1': { en: 'T', fr: 'M' },

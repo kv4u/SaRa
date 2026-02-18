@@ -4,7 +4,7 @@ import { storage } from '../utils/storage'
 export interface Task {
   id: string
   title: string
-  duration: 5 | 10 | 15
+  duration: number
   completed: boolean
   completedAt?: string
   createdAt: string
@@ -13,10 +13,10 @@ export interface Task {
 
 interface TaskState {
   tasks: Task[]
-  addTask: (title: string, duration: 5 | 10 | 15, parentId?: string) => Task
+  addTask: (title: string, duration: number, parentId?: string) => Task
   toggleTask: (id: string) => void
   deleteTask: (id: string) => void
-  editTask: (id: string, title: string, duration: 5 | 10 | 15) => void
+  editTask: (id: string, title: string, duration: number) => void
 }
 
 const loadTasks = (): Task[] => storage.get<Task[]>('tasks', [])

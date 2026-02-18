@@ -11,7 +11,7 @@ export default function Navbar() {
     { path: '/', label: t('nav.home'), icon: HomeIcon },
     { path: '/tasks', label: t('nav.tasks'), icon: TasksIcon },
     { path: '/timer', label: t('nav.timer'), icon: TimerIcon },
-    { path: '/dopamine', label: t('nav.boost'), icon: BoostIcon },
+    { path: '/smart', label: t('nav.smart'), icon: SmartIcon },
     { path: '/progress', label: t('nav.progress'), icon: ProgressIcon },
   ]
 
@@ -81,10 +81,11 @@ function TimerIcon({ active }: { active: boolean }) {
   )
 }
 
-function BoostIcon({ active }: { active: boolean }) {
+function SmartIcon({ active }: { active: boolean }) {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill={active ? 'rgba(45,212,191,0.2)' : 'none'} stroke={active ? '#5eead4' : '#6b7280'} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+      <path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z" />
+      <line x1="9" y1="21" x2="15" y2="21" />
     </svg>
   )
 }

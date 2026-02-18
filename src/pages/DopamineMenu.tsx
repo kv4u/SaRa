@@ -75,11 +75,11 @@ export default function DopamineMenuPage() {
             <>
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                 onClick={() => setShowAddForm(false)}
-                className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40" />
+                className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60]" />
               <motion.div
                 initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
                 transition={{ type: 'spring', damping: 28, stiffness: 300 }}
-                className="fixed bottom-0 left-0 right-0 z-50 glass-strong rounded-t-3xl p-5 space-y-3 max-w-lg mx-auto"
+                className="fixed bottom-0 left-0 right-0 z-[70] glass-strong rounded-t-3xl p-5 space-y-3 max-w-lg mx-auto"
                 style={{ paddingBottom: 'calc(20px + var(--safe-area-bottom))' }}
               >
                 <div className="w-10 h-1 bg-white/20 rounded-full mx-auto mb-1" />

@@ -2,16 +2,17 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useTaskStore, useSubTasks } from '../../stores/taskStore'
 import { useSettingsStore, getPointsForDuration } from '../../stores/settingsStore'
+import { useTimerBarStore } from '../../stores/timerBarStore'
 import { playComplete } from '../../utils/sounds'
 import { useLangStore, localizedCompletionMessages, getRandomItem, useT } from '../../utils/i18n'
 import type { Task } from '../../stores/taskStore'
 import confetti from 'canvas-confetti'
 import TaskForm from './TaskForm'
 
-const accentColors: Record<number, { border: string; bg: string; text: string }> = {
-  5: { border: 'border-l-emerald-500', bg: 'bg-emerald-500/10', text: 'text-emerald-400' },
-  10: { border: 'border-l-teal-500', bg: 'bg-teal-500/10', text: 'text-teal-400' },
-  15: { border: 'border-l-cyan-500', bg: 'bg-cyan-500/10', text: 'text-cyan-400' },
+function getAccent(duration: number) {
+  if (duration <= 5) return { border: 'border-l-emerald-500', bg: 'bg-emerald-500/10', text: 'text-emerald-400' }
+  if (duration <= 15) return { border: 'border-l-teal-500', bg: 'bg-teal-500/10', text: 'text-teal-400' }
+  return { border: 'border-l-cyan-500', bg: 'bg-cyan-500/10', text: 'text-cyan-400' }
 }
 
 export default function TaskItem({ task, index }: { task: Task; index: number }) {
@@ -19,13 +20,16 @@ export default function TaskItem({ task, index }: { task: Task; index: number })
   const deleteTask = useTaskStore((s) => s.deleteTask)
   const addPoints = useSettingsStore((s) => s.addPoints)
   const updateStreak = useSettingsStore((s) => s.updateStreak)
+  const startTask = useTimerBarStore((s) => s.startTask)
+  const activeTaskId = useTimerBarStore((s) => s.taskId)
   const lang = useLangStore((s) => s.lang)
   const t = useT()
   const [showMessage, setShowMessage] = useState('')
   const [expanded, setExpanded] = useState(false)
   const [showSubForm, setShowSubForm] = useState(false)
   const subTasks = useSubTasks(task.id)
-  const accent = accentColors[task.duration] || accentColors[10]
+  const accent = getAccent(task.duration)
+  const isPlaying = activeTaskId === task.id
 
   const handleToggle = () => {
     if (!task.completed) {
@@ -47,9 +51,8 @@ export default function TaskItem({ task, index }: { task: Task; index: number })
       transition={{ delay: index * 0.03, duration: 0.25 }}
       layout
     >
-      <div className={`glass-card border-l-[3px] ${accent.border} p-3.5 transition-all ${task.completed ? 'opacity-40' : ''}`}>
+      <div className={`glass-card border-l-[3px] ${accent.border} p-3.5 transition-all ${task.completed ? 'opacity-40' : ''} ${isPlaying ? 'ring-1 ring-primary-500/40' : ''}`}>
         <div className="flex items-center gap-3">
-          {/* Animated checkbox */}
           <motion.button
             whileTap={{ scale: 0.85 }}
             onClick={handleToggle}
@@ -67,7 +70,6 @@ export default function TaskItem({ task, index }: { task: Task; index: number })
             )}
           </motion.button>
 
-          {/* Content */}
           <div className="flex-1 min-w-0" onClick={() => !task.parentId && setExpanded(!expanded)}>
             <p className={`text-[13px] font-medium truncate leading-snug ${task.completed ? 'line-through text-gray-500' : 'text-white'}`}>
               {task.title}
@@ -79,12 +81,27 @@ export default function TaskItem({ task, index }: { task: Task; index: number })
             )}
           </div>
 
-          {/* Duration pill */}
-          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${accent.bg} ${accent.text}`}>
+          <span className={`text-[11px] font-bold px-2.5 py-0.5 rounded-full ${accent.bg} ${accent.text}`}>
             {task.duration}m
           </span>
 
-          {/* Delete */}
+          {!task.completed && (
+            <motion.button
+              whileTap={{ scale: 0.85 }}
+              onClick={() => startTask(task)}
+              className={`p-1.5 rounded-lg cursor-pointer transition-all ${
+                isPlaying
+                  ? 'bg-primary-500/20 text-primary-300'
+                  : 'text-gray-500 hover:text-primary-400 hover:bg-primary-500/10'
+              }`}
+              title="Start timer"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                <polygon points="5 3 19 12 5 21 5 3" />
+              </svg>
+            </motion.button>
+          )}
+
           <motion.button whileTap={{ scale: 0.8 }} onClick={() => deleteTask(task.id)} className="text-gray-600 hover:text-red-400 transition p-1 cursor-pointer rounded-lg hover:bg-red-500/10">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
@@ -92,7 +109,6 @@ export default function TaskItem({ task, index }: { task: Task; index: number })
           </motion.button>
         </div>
 
-        {/* Sub-tasks */}
         {expanded && !task.parentId && (
           <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="mt-2.5 ml-8 space-y-2 overflow-hidden border-l border-primary-800/30 pl-3">
             {subTasks.map((sub, i) => <TaskItem key={sub.id} task={sub} index={i} />)}
