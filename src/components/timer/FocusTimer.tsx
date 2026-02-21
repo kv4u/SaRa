@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useSettingsStore } from '../../stores/settingsStore'
+import { useThemeStore, themes } from '../../stores/themeStore'
 import { playTimerEnd } from '../../utils/sounds'
 import { useT } from '../../utils/i18n'
 import confetti from 'canvas-confetti'
@@ -13,14 +14,14 @@ interface Props {
   isJustFiveMinutes?: boolean
 }
 
-const phaseColors: Record<TimerPhase, string> = {
-  idle: '#14b8a6',
-  focus: '#14b8a6',
-  break: '#22c55e',
-  done: '#facc15',
+function usePhaseColors(): Record<TimerPhase, string> {
+  const themeId = useThemeStore((s) => s.themeId)
+  const primary = themes[themeId].palette.primary['500']
+  return { idle: primary, focus: primary, break: '#22c55e', done: '#facc15' }
 }
 
 export default function FocusTimer({ initialMinutes, onComplete, isJustFiveMinutes }: Props) {
+  const phaseColors = usePhaseColors()
   const focusDuration = useSettingsStore((s) => s.focusDuration)
   const breakDuration = useSettingsStore((s) => s.breakDuration)
   const recordFocusMinutes = useSettingsStore((s) => s.recordFocusMinutes)

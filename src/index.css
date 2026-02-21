@@ -29,6 +29,10 @@
 
 :root {
   --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --theme-bg: #0b1121;
+  --theme-ambient-1: rgba(20,184,166,0.08);
+  --theme-ambient-2: rgba(6,182,212,0.06);
+  --theme-ambient-3: rgba(14,165,233,0.04);
 }
 
 * {
@@ -45,7 +49,7 @@ body {
   height: 100%;
   margin: 0;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: #0b1121;
+  background: var(--theme-bg);
   color: #ffffff;
   overscroll-behavior: none;
   -webkit-font-smoothing: antialiased;
@@ -59,9 +63,9 @@ body::before {
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(ellipse 60% 50% at 20% 20%, rgba(20, 184, 166, 0.08) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 40% at 80% 80%, rgba(6, 182, 212, 0.06) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 50% at 50% 50%, rgba(14, 165, 233, 0.04) 0%, transparent 50%);
+    radial-gradient(ellipse 60% 50% at 20% 20%, var(--theme-ambient-1) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 80%, var(--theme-ambient-2) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 50% at 50% 50%, var(--theme-ambient-3) 0%, transparent 50%);
   animation: ambientShift 20s ease-in-out infinite alternate;
 }
 
@@ -104,11 +108,11 @@ body::before {
 
 /* ===== Gradients ===== */
 .gradient-primary {
-  background: linear-gradient(135deg, #14b8a6 0%, #0d9488 50%, #06b6d4 100%);
+  background: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-600) 50%, var(--color-primary-400) 100%);
 }
 
 .gradient-warm {
-  background: linear-gradient(135deg, #0d9488 0%, #0891b2 100%);
+  background: linear-gradient(135deg, var(--color-primary-700) 0%, var(--color-primary-400) 100%);
 }
 
 .gradient-success {
@@ -120,7 +124,7 @@ body::before {
 }
 
 .gradient-rainbow {
-  background: linear-gradient(135deg, #14b8a6, #06b6d4, #0ea5e9, #22c55e, #facc15);
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-400), var(--color-primary-300), #22c55e, #facc15);
   background-size: 300% 300%;
   animation: rainbowShift 4s ease infinite;
 }
@@ -133,11 +137,11 @@ body::before {
 
 /* ===== Shadows ===== */
 .shadow-glow-purple {
-  box-shadow: 0 4px 24px rgba(20, 184, 166, 0.2), 0 0 40px rgba(20, 184, 166, 0.08);
+  box-shadow: 0 4px 24px color-mix(in srgb, var(--color-primary-500) 20%, transparent), 0 0 40px color-mix(in srgb, var(--color-primary-500) 8%, transparent);
 }
 
 .shadow-glow-pink {
-  box-shadow: 0 4px 24px rgba(6, 182, 212, 0.18), 0 0 30px rgba(6, 182, 212, 0.08);
+  box-shadow: 0 4px 24px color-mix(in srgb, var(--color-primary-400) 18%, transparent), 0 0 30px color-mix(in srgb, var(--color-primary-400) 8%, transparent);
 }
 
 .shadow-soft {
@@ -161,8 +165,8 @@ body::before {
 }
 
 @keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 16px rgba(20, 184, 166, 0.25), 0 0 32px rgba(20, 184, 166, 0.08); }
-  50% { box-shadow: 0 0 24px rgba(20, 184, 166, 0.4), 0 0 48px rgba(20, 184, 166, 0.15); }
+  0%, 100% { box-shadow: 0 0 16px color-mix(in srgb, var(--color-primary-500) 25%, transparent), 0 0 32px color-mix(in srgb, var(--color-primary-500) 8%, transparent); }
+  50% { box-shadow: 0 0 24px color-mix(in srgb, var(--color-primary-500) 40%, transparent), 0 0 48px color-mix(in srgb, var(--color-primary-500) 15%, transparent); }
 }
 
 @keyframes shimmer {
@@ -181,9 +185,9 @@ body::before {
 .shimmer-bar {
   background: linear-gradient(
     90deg,
-    rgba(20, 184, 166, 0.3) 0%,
-    rgba(45, 212, 191, 0.6) 50%,
-    rgba(20, 184, 166, 0.3) 100%
+    color-mix(in srgb, var(--color-primary-500) 30%, transparent) 0%,
+    color-mix(in srgb, var(--color-primary-300) 60%, transparent) 50%,
+    color-mix(in srgb, var(--color-primary-500) 30%, transparent) 100%
   );
   background-size: 200% 100%;
   animation: shimmer 2s ease-in-out infinite;
@@ -192,10 +196,10 @@ body::before {
 /* ===== Scrollbar ===== */
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(20, 184, 166, 0.2); border-radius: 999px; }
+::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--color-primary-500) 20%, transparent); border-radius: 999px; }
 
 ::selection {
-  background: rgba(20, 184, 166, 0.3);
+  background: color-mix(in srgb, var(--color-primary-500) 30%, transparent);
   color: white;
 }
 

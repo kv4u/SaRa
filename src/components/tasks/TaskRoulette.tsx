@@ -117,7 +117,7 @@ export default function TaskRoulette() {
               </text>
             </g>
           ))}
-          <circle cx="150" cy="150" r="20" fill="#0b1121" stroke="#14b8a6" strokeWidth="3" />
+          <circle cx="150" cy="150" r="20" fill="var(--theme-bg, #0b1121)" stroke="var(--color-primary-500, #14b8a6)" strokeWidth="3" />
           <text x="150" y="150" fill="white" fontSize="16" textAnchor="middle" dominantBaseline="middle">🎯</text>
         </motion.svg>
       </div>

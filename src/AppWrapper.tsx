@@ -2,6 +2,7 @@ import React, { Suspense } from 'react'
 import { HashRouter, Routes, Route } from 'react-router-dom'
 import Navbar from './components/layout/Navbar'
 import FloatingTimerBar from './components/timer/FloatingTimerBar'
+import { useThemeStore } from './stores/themeStore'
 
 const Dashboard = React.lazy(() => import('./pages/Dashboard'))
 const Tasks = React.lazy(() => import('./pages/Tasks'))
@@ -9,6 +10,7 @@ const Timer = React.lazy(() => import('./pages/Timer'))
 const DopamineMenu = React.lazy(() => import('./pages/DopamineMenu'))
 const Progress = React.lazy(() => import('./pages/Progress'))
 const SmartPlanner = React.lazy(() => import('./pages/SmartPlanner'))
+const Settings = React.lazy(() => import('./pages/Settings'))
 
 class ErrorBoundary extends React.Component<
   { children: React.ReactNode },
@@ -48,6 +50,8 @@ const LoadingScreen = () => (
 )
 
 export default function AppWrapper() {
+  useThemeStore()
+
   return (
     <HashRouter>
       <div className="min-h-screen text-white max-w-lg mx-auto relative">
@@ -60,6 +64,7 @@ export default function AppWrapper() {
               <Route path="/dopamine" element={<DopamineMenu />} />
               <Route path="/progress" element={<Progress />} />
               <Route path="/smart" element={<SmartPlanner />} />
+              <Route path="/settings" element={<Settings />} />
             </Routes>
           </Suspense>
         </ErrorBoundary>

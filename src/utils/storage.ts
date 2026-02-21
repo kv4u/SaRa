@@ -24,4 +24,9 @@ export const storage = {
   remove(key: string): void {
     localStorage.removeItem(PREFIX + key)
   },
+
+  clearAll(): void {
+    const keys = Object.keys(localStorage).filter((k) => k.startsWith(PREFIX))
+    keys.forEach((k) => localStorage.removeItem(k))
+  },
 }

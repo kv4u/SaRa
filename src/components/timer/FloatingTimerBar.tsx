@@ -68,7 +68,7 @@ export default function FloatingTimerBar() {
           <div className="glass-strong rounded-2xl overflow-hidden shadow-glow-purple">
             <div className="h-[3px] bg-white/5">
               <div
-                className="h-full bg-gradient-to-r from-primary-500 to-cyan-400 transition-all duration-1000 ease-linear"
+                className="h-full bg-gradient-to-r from-primary-500 to-primary-300 transition-all duration-1000 ease-linear"
                 style={{ width: `${progress}%` }}
               />
             </div>

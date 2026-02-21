@@ -114,6 +114,12 @@ const translations = {
   // Settings
   'settings.language': { en: 'Language', fr: 'Langue' },
   'settings.title': { en: 'Settings', fr: 'Réglages' },
+  'settings.theme': { en: 'Theme', fr: 'Thème' },
+  'settings.reset': { en: 'Reset All Data', fr: 'Réinitialiser tout' },
+  'settings.reset_desc': { en: 'This will erase all tasks, points, streaks, and settings.', fr: 'Cela effacera toutes les tâches, points, séries et réglages.' },
+  'settings.reset_confirm': { en: 'Yes, Reset Everything', fr: 'Oui, tout réinitialiser' },
+  'settings.reset_cancel': { en: 'Cancel', fr: 'Annuler' },
+  'settings.reset_done': { en: 'All data has been reset.', fr: 'Toutes les données ont été réinitialisées.' },
 
   // Custom duration
   'tasks.custom': { en: 'Custom', fr: 'Perso' },
